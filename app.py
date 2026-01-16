@@ -40,7 +40,7 @@ st.set_page_config(
 )
 
 # ================== AUTH GUARD (DO NOT TOUCH ANYTHING ELSE) ==================
-BACKEND_URL = "https://simons-backend.onrender.com"
+BACKEND_URL = "https://simons-backend-1.onrender.com"
 
 
 # Read token from URL: http://localhost:8501?token=xxxx
