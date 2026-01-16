@@ -7,8 +7,7 @@ import requests
 import time
 import base64
 from datetime import datetime, timedelta
-import jwt
-from urllib.parse import urlparse, parse_qs
+
 
 
 # --- 1. PAGE CONFIGURATION ---
