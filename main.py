@@ -1,4 +1,8 @@
+from fastapi import Header
+
 from fastapi import FastAPI, HTTPException, Depends
+
+
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
@@ -10,7 +14,7 @@ import jwt
 # ------------------ JWT CONFIG ------------------
 SECRET_KEY = "SIMONS_SUPER_SECRET_KEY"
 ALGORITHM = "HS256"
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+
 
 # ------------------ APP INIT ------------------
 app = FastAPI(title="Simons Trading API")
@@ -76,9 +80,15 @@ def login(data: LoginRequest):
     }
 
 # ------------------ TOKEN VERIFY ROUTE ------------------
+
+
 @app.get("/verify-token")
-def verify_token(token: str = Depends(oauth2_scheme)):
+def verify_token(authorization: str = Header(None)):
+    if not authorization:
+        raise HTTPException(status_code=401, detail="Authorization header missing")
+
     try:
+        token = authorization.split(" ")[1]  # "Bearer <token>"
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return {
             "status": "ok",
@@ -89,6 +99,7 @@ def verify_token(token: str = Depends(oauth2_scheme)):
         }
     except:
         raise HTTPException(status_code=401, detail="Invalid token")
+
 
 # ------------------ EXCHANGE SETUP ------------------
 exchange = ccxt.kraken({'enableRateLimit': True})
