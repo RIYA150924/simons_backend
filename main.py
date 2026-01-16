@@ -80,7 +80,13 @@ def login(data: LoginRequest):
 def verify_token(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        return {"status": "ok", "user": payload.get("sub")}
+        return {
+            "status": "ok",
+            "user": {
+                "email": payload.get("sub"),
+                "username": payload.get("username")
+            }
+        }
     except:
         raise HTTPException(status_code=401, detail="Invalid token")
 
