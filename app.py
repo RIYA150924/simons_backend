@@ -352,7 +352,7 @@ with st.sidebar:
     st.markdown('<div class="sidebar-logo">Simons</div>', unsafe_allow_html=True)
     st.caption(f"SERVER TIME: {datetime.now().strftime('%H:%M:%S UTC')}")
     
-    menu = st.radio("MODULE", ["LIVE FEED", "STRATEGY LAB", "TUTORIAL"], label_visibility="collapsed")
+    menu = st.radio("MODULE", ["LIVE FEED", "STRATEGY LAB", "TUTORIAL"], label_visibility="collapsed",key="module_selector")
     st.markdown("---")
     
     # --- 1. STRATEGY PARAMETERS MENU ---
